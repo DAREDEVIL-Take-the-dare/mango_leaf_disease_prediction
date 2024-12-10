@@ -1,22 +1,14 @@
 import streamlit as st
 from PIL import Image
 import numpy as np
-import pickle
+import tensorflow as tf
 
-# Load the DenseNet121 model using pickle
-model_path = "DenseNet121_model.pkl"  # Update the path to the pickle file
-with open(model_path, 'rb') as file:
-    model = pickle.load(file)
+# Load the DenseNet121 model
+model_path = "DenseNet121_model.h5"  # Update the path if necessary
+model = tf.keras.models.load_model(model_path)
 
 # Define class labels
-class_labels = ['Powdery Mildew',
- 'Cutting Weevil',
- 'Anthracnose',
- 'Bacterial Canker',
- 'Sooty Mould',
- 'Gall Midge',
- 'Healthy',
- 'Die Back']  # Replace with actual class labels
+class_labels = ["Class1", "Class2", "Class3", "Class4", "Class5"]  # Replace with actual class labels
 
 # Function to predict and display results
 def predict_image(image_array):
@@ -68,8 +60,9 @@ st.markdown('<div class="sub-header">Upload a leaf image to classify using the D
 uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
 if uploaded_file:
     st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
-    image = Image.open(uploaded_file).resize((224, 224))  # Ensure the input size matches the model's requirements
-    image_array = np.array(image).flatten().reshape(1, -1)  # Flatten and reshape for compatibility
+    image = Image.open(uploaded_file).resize((224, 224))  # Assuming DenseNet121 accepts 224x224 inputs
+    image_array = np.array(image) / 255.0  # Normalize pixel values
+    image_array = np.expand_dims(image_array, axis=0)
 
 # Predict Button
 if st.button("Predict with DenseNet121"):
