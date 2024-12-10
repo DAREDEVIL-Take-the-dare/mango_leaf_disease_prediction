@@ -60,7 +60,7 @@ st.markdown('<div class="sub-header">Upload a leaf image to classify using the D
 uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
 if uploaded_file:
     st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
-    image = Image.open(uploaded_file).resize((224, 224))  # Assuming DenseNet121 accepts 224x224 inputs
+    image = Image.open(uploaded_file).resize((256,256))  # Assuming DenseNet121 accepts 224x224 inputs
     image_array = np.array(image) / 255.0  # Normalize pixel values
     image_array = np.expand_dims(image_array, axis=0)
 
