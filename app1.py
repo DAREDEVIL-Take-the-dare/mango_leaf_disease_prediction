@@ -8,7 +8,14 @@ model_path = "DenseNet121_model.h5"  # Update the path if necessary
 model = tf.keras.models.load_model(model_path)
 
 # Define class labels
-class_labels = ["Class1", "Class2", "Class3", "Class4", "Class5"]  # Replace with actual class labels
+class_labels = ['Powdery Mildew',
+ 'Cutting Weevil',
+ 'Anthracnose',
+ 'Bacterial Canker',
+ 'Sooty Mould',
+ 'Gall Midge',
+ 'Healthy',
+ 'Die Back']  # Replace with actual class labels
 
 # Function to predict and display results
 def predict_image(image_array):
